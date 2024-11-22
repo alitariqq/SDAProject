@@ -84,9 +84,9 @@ WSGI_APPLICATION = 'forumProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db',  # Replace with your schema name
+        'NAME': 'userTry',  # Replace with your schema name
         'USER': 'root',     # Your MySQL username
-        'PASSWORD': '1234',  # Your MySQL password
+        'PASSWORD': 'Hond@city2014',  # Your MySQL password
         'HOST': 'localhost',
         'PORT': '3306',
     }
