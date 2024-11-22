@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './register.css';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -29,49 +30,85 @@ const Register = () => {
     
 
     return (
-        <div>
-            <h1>Register</h1>
-            <form onSubmit={handleRegister}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+        <div class="container">
+       
+
+        <div class="title">Registration</div>
+        <div class="content">
+        
+          <form action="#" onSubmit={handleRegister}>
+            <div class="user-details">
+              
+              <div class="input-box">
+                <span class="details">First Name</span>
                 <input
                     type="text"
                     placeholder='First Name'
                     value={first_name}
                     onChange={(e) => setFname(e.target.value)}
-                />
+                />         
+              </div>
+            
+    
+              <div class="input-box">
+                <span class="details">Last Name</span>
                 <input
-                    type="text"
-                    placeholder='Last Name'
-                    value={last_name}
-                    onChange={(e) => setLname(e.target.value)}
-                />
+                        type="text"
+                        placeholder='Last Name'
+                        value={last_name}
+                        onChange={(e) => setLname(e.target.value)}
+                />        
+              </div>
+              
+    
+              
+              <div class="input-box">
+                <span class="details">Username</span>
                 <input
-                    type="text"
-                    placeholder='email'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                />          </div>
+              
+              <div class="input-box">
+                <span class="details">Email</span>
                 <input
-                    type='date'
-                    value={dateOfBirth}
-                    onChange={(e) => setDob(e.target.value)}
-                />
+                type="email"
+                placeholder='email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                />          </div>
+              
 
-                <button type="submit">Register</button>
-            </form>
-            <p>{message}</p>
+              <div class="input-box">
+                <span class="details">Date Of Birth</span>
+                <input
+                type='date'
+                value={dateOfBirth}
+                onChange={(e) => setDob(e.target.value)}/>          
+            </div>
+              
+              <div class="input-box">
+                <span class="details">Password</span>
+                <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                />          
+              </div>
+    
+              
+            </div> 
+           
+
+            <div class="button">
+              <input type="submit" value="Register"/>
+            </div>
+          </form>
         </div>
+      </div>
     );
 };
 
