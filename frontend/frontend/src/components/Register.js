@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Register = () => {
+const Register = ({ navigate }) => {
     const [username, setUsername] = useState('');
     const [first_name, setFname] = useState('');
     const [last_name, setLname] = useState('');
@@ -14,7 +14,8 @@ const Register = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8000/api/register/', { username, password, first_name, last_name, email, dateOfBirth });
-            setMessage(response.data.message);  // Accessing the message from the response
+            setMessage(response.data.message);
+            navigate('signin'); // Redirect to SignIn on success
         } catch (error) {
             console.error('Error during registration:', error);  // Log the error details
             if (error.response) {
@@ -26,7 +27,6 @@ const Register = () => {
             }
         }
     };
-    
 
     return (
         <div>
@@ -71,6 +71,12 @@ const Register = () => {
                 <button type="submit">Register</button>
             </form>
             <p>{message}</p>
+            <p>
+                Already have an account?{' '}
+                <button onClick={() => navigate('signin')} style={{ color: 'blue', cursor: 'pointer', background: 'none', border: 'none' }}>
+                    Sign In
+                </button>
+            </p>
         </div>
     );
 };
