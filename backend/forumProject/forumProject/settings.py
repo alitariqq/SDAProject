@@ -48,14 +48,22 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_NAME = 'sessionid'
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SECURE = False
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+]
+
 
 ROOT_URLCONF = 'forumProject.urls'
 
@@ -84,9 +92,9 @@ WSGI_APPLICATION = 'forumProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db',  # Replace with your schema name
+        'NAME': 'userTry',  # Replace with your schema name
         'USER': 'root',     # Your MySQL username
-        'PASSWORD': '1234',  # Your MySQL password
+        'PASSWORD': 'Hond@city2014',  # Your MySQL password
         'HOST': 'localhost',
         'PORT': '3306',
     }
