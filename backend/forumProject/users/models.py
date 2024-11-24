@@ -15,6 +15,6 @@ class Post(models.Model):
     body=models.TextField()
     category=models.CharField(max_length=10)
 
-    def __str__(self):
+    def _str_(self):
         return self.title
     pass

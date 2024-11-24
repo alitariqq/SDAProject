@@ -25,6 +25,10 @@ const Dashboard = ({ loggedInUser, setLoggedInUser, setPage }) => {
     setPage('updateUser');
   }
 
+  const addPostPage = () => {
+    setPage('Postform');
+  }
+
   if (!loggedInUser) {
     console.log("Dashboard - Waiting for loggedInUser...");
     return <div>Loading user information...</div>;
@@ -35,6 +39,7 @@ const Dashboard = ({ loggedInUser, setLoggedInUser, setPage }) => {
       <h1>Welcome, {loggedInUser}!</h1>
       <button onClick={handleLogout}>Logout</button>
       <button onClick={updateUserDetails}>Update User</button>
+      <button onClick={addPostPage}>Post</button>
     </div>
   );
 };

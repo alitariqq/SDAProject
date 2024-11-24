@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Register from './components/Register';
 import SignIn from './components/SignIn';
 import Dashboard from './components/Dashboard';
-import PostForm from './components/PostForm';
 import axios from 'axios';
 import UpdateUser from './components/updateUser';
+import PostForm from './components/PostForm';
 
 const App = () => {
     axios.defaults.withCredentials = true;
@@ -47,6 +47,12 @@ const App = () => {
                 setPage={setPage}
             />
         );
+    }
+
+    if (page === 'Postform') {
+        return (
+            <PostForm setPage={setPage} />
+        )
     }
 
     if (page === 'updateUser') {
