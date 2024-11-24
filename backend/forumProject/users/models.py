@@ -6,3 +6,15 @@ class CustomUser(AbstractUser):
     dateOfBirth = models.DateField(null=False, default="2000-01-01")
     isVerified = models.BooleanField(default=False)
     pass
+
+
+
+class Post(models.Model):
+    username=models.CharField(max_length=200)
+    title=models.CharField(max_length=255)
+    body=models.TextField()
+    category=models.CharField(max_length=10)
+
+    def _str_(self):
+        return self.title
+    pass

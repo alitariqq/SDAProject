@@ -4,6 +4,7 @@ import SignIn from './components/SignIn';
 import Dashboard from './components/Dashboard';
 import axios from 'axios';
 import UpdateUser from './components/updateUser';
+import PostForm from './components/Postform';
 
 const App = () => {
     axios.defaults.withCredentials = true;
@@ -46,6 +47,12 @@ const App = () => {
                 setPage={setPage}
             />
         );
+    }
+
+    if(page === 'Postform') {
+        return (
+            <PostForm setPage={setPage} />
+        )
     }
 
     if (page === 'updateUser') {
