@@ -9,7 +9,6 @@ class CustomUser(AbstractUser):
     pass
 
 
-
 class Post(models.Model):
     username=models.CharField(max_length=200)
     title=models.CharField(max_length=255)

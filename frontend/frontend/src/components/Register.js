@@ -78,37 +78,10 @@ const Register = ({ navigate }) => {
                 placeholder='email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                />          </div>
-              
-
-<<<<<<< HEAD
-              <div class="input-box">
-                <span class="details">Date Of Birth</span>
-                <input
-                type='date'
-                value={dateOfBirth}
-                onChange={(e) => setDob(e.target.value)}/>          
-            </div>
-              
-              <div class="input-box">
-                <span class="details">Password</span>
-                <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                />          
+                />         
               </div>
-    
-              
-            </div> 
-           
+              </div>
 
-            <div class="button">
-              <input type="submit" value="Register"/>
-            </div>
-          </form>
-=======
                 <button type="submit">Register</button>
             </form>
             <p>{message}</p>
@@ -118,7 +91,6 @@ const Register = ({ navigate }) => {
                     Sign In
                 </button>
             </p>
->>>>>>> 0fee2a78021836e808ab5c37387e8728176858e4
         </div>
       </div>
     );

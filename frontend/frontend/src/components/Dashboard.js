@@ -6,11 +6,13 @@ const Dashboard = ({ loggedInUser, setLoggedInUser, setPage }) => {
   const handleLogout = async () => {
     try {
       // Include CSRF token with the logout request
+      console.log(document.cookie);
       const response = await axios.post('http://localhost:8000/api/logout/', {}, {
         headers: {
           'X-CSRFToken': getCSRFToken()  // Manually set CSRF token for logout
         },
       });
+      console.log(document.cookie);
       console.log('Logout successful', response.data);
       setLoggedInUser(null);  // Clear the logged-in user state
       setPage('home');
