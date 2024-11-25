@@ -3,6 +3,9 @@ from .views import UserHandling
 from .views import PostCreateView
 from .views import UserHandling,modifyUser
 from .views import PostCreateView
+from.views import PostList
+
+
 
 urlpatterns = [
     path('register/', UserHandling.register, name='register'),
@@ -10,5 +13,6 @@ urlpatterns = [
     path('forms2/', PostCreateView.as_view(), name='post-create'),
     path('session/', UserHandling.session_check, name='session_check'),
     path('logout/', UserHandling.logout, name='logout'),
-    path('updateUser/',modifyUser.updateUser, name='updateUser')
+    path('updateUser/',modifyUser.updateUser, name='updateUser'),
+    path('viewPosts/', PostList.as_view(), name='post-list'),
 ]

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { getCSRFToken } from '../utils/csrf';
 
-const PostForm = (setPage) => {
+const PostForm = ({setPage}) => {
     const [username, setUsername] = useState('');
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
