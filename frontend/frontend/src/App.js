@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard';
 import axios from 'axios';
 import UpdateUser from './components/updateUser';
 import PostForm from './components/Postform';
+import Home from './components/Home';
 
 const App = () => {
     axios.defaults.withCredentials = true;
@@ -27,7 +28,7 @@ const App = () => {
             } catch (error) {
                 console.error("Session Check Error:", error);
                 setLoggedInUser(null);
-                setPage('signin');
+                setPage('home');
             } finally {
                 setLoading(false);
             }
@@ -51,7 +52,7 @@ const App = () => {
 
     if(page === 'Postform') {
         return (
-            <PostForm setPage={setPage} />
+            <PostForm loggedInUser={loggedInUser} setPage={setPage} />
         )
     }
 
@@ -72,6 +73,10 @@ const App = () => {
 
     if (page === 'register') {
         return <Register navigate={navigate} />;
+    }
+
+    if (page === 'home') {
+        return <Home setPage={setPage}/>
     }
 
     return (

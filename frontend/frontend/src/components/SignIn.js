@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { getCSRFToken } from '../utils/csrf';
 import './SignIn.css'
 
 const SignIn = ({ loggedInUser, setLoggedInUser, setPage }) => {
@@ -13,7 +14,9 @@ const SignIn = ({ loggedInUser, setLoggedInUser, setPage }) => {
             const response = await axios.post(
                 'http://localhost:8000/api/signin/',
                 { username, password },
-                { withCredentials: true } // Ensure cookies are included for session tracking
+                { withCredentials: true, headers: {
+                    'X-CSRFToken': getCSRFToken(), // Manually set CSRF token for logout
+                  } } // Ensure cookies are included for session tracking
             );
             console.log("Sign In Response:", response.data);
             setLoggedInUser(response.data.username); // Set logged-in user

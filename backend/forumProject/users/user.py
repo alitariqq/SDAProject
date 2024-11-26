@@ -1,4 +1,5 @@
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from users.models import CustomUser
 from django.contrib.auth import authenticate, login, logout
@@ -69,6 +70,19 @@ class UserHandling:
             'username': user.username
         }, status=200)
     
+    @api_view(['GET'])
+    @login_required
+    def dashboard(request):
+        user = request.user
+        age = modifyUser.calculateAge(str(user.dateOfBirth))
+        return Response({
+            'username':user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email' : user.email,
+            'age' : age
+        })
+    
     @api_view(['POST'])
     @csrf_exempt
     @permission_classes([AllowAny])
@@ -76,6 +90,7 @@ class UserHandling:
         # Log out the user by clearing the session
         logout(request)
         return Response({'message': 'Successfully logged out.'}, status=200)
+    
 
         
     
@@ -111,3 +126,21 @@ class modifyUser:
 
         user.save()
         return Response({"message": "Profile updated successfully"}, status=200)
+    
+    @api_view(['DELETE'])
+    @permission_classes([IsAuthenticated])
+    def delete_user(request):
+        try:
+            deleteUsername = request.data.get('username')
+            user = request.user
+            if not user.is_superuser:
+                return Response({'error': 'User does not have permission to delete this account!'}, status=403)
+
+            # Find and delete the user
+            deleteUser = CustomUser.objects.get(username=deleteUsername)
+            deleteUser.delete()
+            return Response({'message': 'User Account deleted successfully'}, status=200)
+        except CustomUser.DoesNotExist:
+            return Response({'error': 'User Acoount not found'}, status=404)
+        except Exception as e:
+            return Response({'error': str(e)}, status=400)
