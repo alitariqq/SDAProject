@@ -88,11 +88,10 @@ const App = () => {
 
     return (
         <div>
-            <h1>Welcome</h1>
-            <button onClick={() => navigate('register')}>Register</button>
-            <button onClick={() => navigate('signin')}>Sign In</button>
+            <h1>My Blog</h1>
+            <ViewPosts />
         </div>
     );
-};
+}
 
 export default App;

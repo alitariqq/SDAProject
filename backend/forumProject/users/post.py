@@ -10,6 +10,10 @@ class PostHandling:
     def delete_post(request):
         try:
             deletePostId = request.data.get('postId')
+
+            if not Post.objects.filter(id = deletePostId).exists():
+                return Response({'error':'This post does not exist'}, status=403)
+
             deletePost = Post.objects.get(id=deletePostId)
             user = request.user
             if not deletePost.username == user:

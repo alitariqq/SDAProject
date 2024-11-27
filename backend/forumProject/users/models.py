@@ -13,7 +13,6 @@ class CustomUser(AbstractUser):
 
 
 
-
 class Post(models.Model):
     username = models.ForeignKey(CustomUser,to_field="username", on_delete=models.CASCADE, db_column="username")
     title=models.CharField(max_length=255)

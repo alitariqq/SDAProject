@@ -1,4 +1,6 @@
 from django.urls import path
+from .views import UserHandling
+from .views import PostCreateView
 from .views import UserHandling,modifyUser
 from .views import PostCreateView
 from .views import PostHandling,ratePosts,upvotePost, downvotePost, bookmarkPost, reportPost
