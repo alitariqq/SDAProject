@@ -4,7 +4,7 @@ from .views import PostCreateView
 from .views import UserHandling,modifyUser
 from .views import PostCreateView
 from .views import PostHandling,ratePosts,upvotePost, downvotePost, bookmarkPost, reportPost
-from .views import AnswerListCreate
+from .views import AnswerListCreate,AnswerDetail,upvoteAnswer,downvoteAnswer,AnswerHandling
 from .views import PostDetail,PostList
 
 urlpatterns = [
@@ -31,4 +31,11 @@ urlpatterns = [
     path('viewPost/', PostList.as_view(), name='view-posts'),
     path('viewPost/<int:pk>/', PostDetail.as_view(), name='view-post-detail'),  # New detail view
     path('viewPost/<int:postId>/answers/', AnswerListCreate.as_view(), name='answer-list-create'),
+    path('upvote/answer/', upvoteAnswer.answer, name = 'upvote-answer'),
+    path('upvote/answer/status/', upvoteAnswer.status, name = 'upvote-answer-status'),
+    path('upvote/answer/delete/', upvoteAnswer.delete, name = 'upvote-answer-delete'),
+    path('downvote/answer/',downvoteAnswer.answer, name = 'downvote-answer'),
+    path('downvote/answer/status/',downvoteAnswer.status, name = 'downvote-status'),
+    path('downvote/answer/delete/',downvoteAnswer.delete, name = 'downvote-answer-delete'),
+    path('answer/delete/', AnswerHandling.deleteAnswer, name = 'answer-delete'),
 ]
