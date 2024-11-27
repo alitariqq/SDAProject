@@ -35,6 +35,34 @@ class AnswerDetail(generics.RetrieveAPIView):
     queryset = Answers.objects.all()
     serializer_class = AnswerSerializer
 
+class AnswerHandling:
+    @api_view(['DELETE'])
+    @permission_classes([IsAuthenticated])
+    def deleteAnswer(request):
+        try:
+            answerId = request.data.get('answerId') #get the answerId
+            user = request.user #fetch the currently logged in user
+
+            #check if the answer exists
+            if not Answers.objects.filter(id = answerId).exists():
+                return Response({'error': 'Answer does not exist'}, status=400)
+            
+            answer = Answers.objects.get(id = answerId)
+
+            if not answer.username == user:
+                if not user.is_superuser:
+                    return Response({'error': 'You dont have permission to remove this answer!'}, status=403)
+
+            # Find and delete the upvote
+            answer.delete()
+
+            return Response({'message': 'answer deleted successfully'}, status=200)
+        except answer.DoesNotExist:
+            return Response({'error': 'answer not found'}, status=404)
+        except Exception as e:
+            return Response({'error': str(e)}, status=400)
+        
+
 class rateAnswer:
     @abstractmethod
     def answer(request):
