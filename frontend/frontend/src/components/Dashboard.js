@@ -220,6 +220,10 @@ const Dashboard = ({ loggedInUser, setLoggedInUser, setPage }) => {
     }
   };
 
+  const postView = async () => {
+    setPage('viewPost')
+  };
+
   useEffect(() => {
     if (loggedInUser) {
       getUserData();
@@ -253,6 +257,7 @@ const Dashboard = ({ loggedInUser, setLoggedInUser, setPage }) => {
         <p>Loading user data...</p>
       )}
       <button onClick={handleLogout}>Logout</button>
+      <button onClick={postView}>viewPost</button>
       <button onClick={updateUserDetails}>Update User</button>
       <button onClick={addPostPage}>Post</button>
       <button onClick={upvotePost}>upvoteTest</button>

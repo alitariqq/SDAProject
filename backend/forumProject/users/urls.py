@@ -2,6 +2,8 @@ from django.urls import path
 from .views import UserHandling,modifyUser
 from .views import PostCreateView
 from .views import PostHandling,ratePosts,upvotePost, downvotePost, bookmarkPost, reportPost
+from .views import AnswerListCreate
+from .views import PostDetail,PostList
 
 urlpatterns = [
     path('register/', UserHandling.register, name='register'),
@@ -24,4 +26,7 @@ urlpatterns = [
     path('report/post/', reportPost.post, name='report-post'),
     path('report/post/status/',reportPost.status, name='bookmark-status'),
     path('report/post/delete/',reportPost.delete, name='bookmark-delete'),
+    path('viewPost/', PostList.as_view(), name='view-posts'),
+    path('viewPost/<int:pk>/', PostDetail.as_view(), name='view-post-detail'),  # New detail view
+    path('viewPost/<int:postId>/answers/', AnswerListCreate.as_view(), name='answer-list-create'),
 ]

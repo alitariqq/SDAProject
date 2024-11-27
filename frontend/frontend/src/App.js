@@ -6,6 +6,7 @@ import axios from 'axios';
 import UpdateUser from './components/updateUser';
 import PostForm from './components/Postform';
 import Home from './components/Home';
+import ViewPosts from './components/viewPost';
 
 const App = () => {
     axios.defaults.withCredentials = true;
@@ -47,6 +48,12 @@ const App = () => {
                 setLoggedInUser={setLoggedInUser}
                 setPage={setPage}
             />
+        );
+    }
+
+    if (page === 'viewPost') {
+        return (
+            <ViewPosts setPage={setPage} />
         );
     }
 

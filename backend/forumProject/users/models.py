@@ -78,3 +78,38 @@ class ReportPosts(models.Model):
 
     def __str__(self):
         return f"{self.user.username} upvoted {self.post.title}"
+    
+
+class Answers(models.Model):
+    postId = models.ForeignKey(Post, on_delete=models.CASCADE, db_column="postId", null=True)
+    username = models.ForeignKey(CustomUser,to_field="username", on_delete=models.CASCADE, db_column="username")
+    body=models.TextField()
+    upvoteCount = models.IntegerField(null=True, default=0)
+    downvoteCount = models.IntegerField(null=True,default=0)
+    pass
+
+class UpvoteAnswers(models.Model):
+    username = models.ForeignKey(CustomUser,to_field="username", on_delete=models.CASCADE, db_column="username")
+    answerId = models.ForeignKey(Answers, on_delete=models.CASCADE, db_column="answerId")
+
+    class Meta:
+        unique_together = ('username', 'answerId')
+        constraints = [
+            models.UniqueConstraint(fields=['username', 'answerId'], name='unique_upvoteAnswer')
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} upvoted {self.answer.body}"
+    
+class DownvoteAnswers(models.Model):
+    username = models.ForeignKey(CustomUser,to_field="username", on_delete=models.CASCADE, db_column="username")
+    answerId = models.ForeignKey(Answers, on_delete=models.CASCADE, db_column="answerId")
+
+    class Meta:
+        unique_together = ('username', 'answerId')
+        constraints = [
+            models.UniqueConstraint(fields=['username', 'answerId'], name='unique_downvoteAnswer')
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} upvoted {self.answer.body}"
