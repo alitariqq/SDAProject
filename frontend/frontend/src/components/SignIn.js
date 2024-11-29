@@ -1,51 +1,88 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { getCSRFToken } from '../utils/csrf';
-import './SignIn.css'
+import { useNavigate } from 'react-router-dom';
+import './SignIn.css';
 
-const SignIn = ({ loggedInUser, setLoggedInUser, setPage }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+const SignIn = ({ setLoggedInUser }) => {
+    const [credentials, setCredentials] = useState({ username: '', password: '' });
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleSignIn = async (e) => {
         e.preventDefault();
+
         try {
-            const response = await axios.post(
-                'http://localhost:8000/api/signin/',
-                { username, password },
-                { withCredentials: true, headers: {
-                    'X-CSRFToken': getCSRFToken(), // Manually set CSRF token for logout
-                  } } // Ensure cookies are included for session tracking
-            );
-            console.log("Sign In Response:", response.data);
-            setLoggedInUser(response.data.username); // Set logged-in user
-            setPage('dashboard');  // Navigate to the dashboard page after setting the user
+            // Simulated API call (replace with real API call)
+            const simulatedResponse = { data: { username: credentials.username } };
+            setLoggedInUser(simulatedResponse.data.username);
+            navigate('/dashboard');
         } catch (error) {
-            console.error("Sign In Error:", error); // Log the error for better insight
-            setMessage(error.response?.data?.error || 'An error occurred.');
+            setMessage('Failed to sign in. Please try again.');
         }
     };
 
     return (
-        <div>
-            <h1>Sign In</h1>
-            <form onSubmit={handleSignIn}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Sign In</button>
-            </form>
-            <p>{message}</p>
+        <div className="signin-page">
+            {/* Top Bar */}
+            <div className="top-bar">
+                <div className="logo">Student Forum</div>
+                <div className="auth-buttons">
+                    <button onClick={() => navigate('/register')} className="top-bar-btn">
+                        Register
+                    </button>
+                    <button onClick={() => navigate('/signin')} className="top-bar-btn">
+                        Login
+                    </button>
+                </div>
+            </div>
+
+            {/* Content */}
+            <div className="signin-container">
+                {/* Left Panel */}
+                <div className="signin-left">
+                    <div className="lap">
+                        <img src={require('C:/Users/mshah/appl/src/lap.jpeg')} alt="Community" />
+                    </div>
+                </div>
+
+                {/* Right Panel */}
+                <div className="signin-right">
+                    <div className="form-container">
+                        <h2 className="welcome-text">
+                            Welcome Back!
+                            <br />
+                            Log in to your account
+                        </h2>
+                        <form onSubmit={handleSignIn}>
+                            <input
+                                type="text"
+                                name="username"
+                                placeholder="Username"
+                                value={credentials.username}
+                                onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+                                required
+                            />
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                value={credentials.password}
+                                onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+                                required
+                            />
+                            <button type="submit" className="signin-btn">
+                                Sign In
+                            </button>
+                            {message && <p className="signin-message">{message}</p>}
+                        </form>
+                        <div className="signup-redirect">
+                            Don't have an account? 
+                            <button onClick={() => navigate('/register')} className="redirect-btn">
+                                Sign up here
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

@@ -1,0 +1,123 @@
+/* Body Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Hero Section */
+.hero-section {
+    display: flex;
+    align-items: stretch; /* Stretch items fully */
+    justify-content: space-between;
+    width: 100%; /* Full width */
+    height: calc(100vh - 60px); /* Full height minus the top bar */
+    padding-top: 0; /* Remove padding to allow content to start right after navbar */
+    padding-bottom: 0;
+    background-color: white;
+}
+
+/* Hero Text Section */
+.hero-text {
+    flex: 1; /* Allow it to take up equal space alongside the image */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px; /* Reduced padding for a tighter fit */
+    background-color: #f8f9fa; /* Light background for text area */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-right: 2px solid #ddd; /* Optional divider between panel and image */
+    margin: 0; /* Ensure it touches the screen edges */
+}
+
+/* Hero Image Section */
+.hero-image {
+    flex: 1; /* Allow it to take up equal space alongside the text */
+    height: 100%; /* Full height of the hero section */
+    overflow: hidden; /* Prevent overflowing image */
+    margin: 0; /* Ensure it touches the screen edges */
+}
+
+.hero-image img {
+    width: 100%; /* Stretch image to fit */
+    height: 100%; /* Stretch image to fit */
+    object-fit: cover; /* Maintain aspect ratio while filling the area */
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Ensure navbar stretches full width */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10; /* Keep navbar on top */
+}
+
+/* Navbar Button */
+.navbar .btn {
+    margin-left: 10px;
+    font-size: 0.9rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Navbar Register Button */
+.navbar-register {
+    background-color: #fd7e14;
+    color: white;
+}
+
+.navbar-register:hover {
+    background-color: #e05d00;
+    transform: scale(1.05);
+}
+
+/* Navbar Login Button */
+.navbar-login {
+    background-color: #007bff;
+    color: white;
+}
+
+.navbar-login:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section {
+        flex-direction: column;
+        height: auto; /* Adjust height for smaller screens */
+    }
+
+    .hero-text {
+        max-width: 90%;
+        padding: 10px; /* Reduced padding for mobile devices */
+        text-align: center;
+        border-right: none; /* Remove divider for smaller screens */
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+
+    .hero-image {
+        height: auto;
+    }
+
+    .hero-image img {
+        height: auto;
+    }
+}
