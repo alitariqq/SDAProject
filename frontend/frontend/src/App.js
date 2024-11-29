@@ -1,35 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Register from './components/Register';
 import SignIn from './components/SignIn';
-import Dashboard from './components/Dashboard';
-import axios from 'axios';
+import Dashboard from './components/Dashboard'; 
+import AnonDashboard from './components/anonDashboard';
 import UpdateUser from './components/updateUser';
 import PostForm from './components/Postform';
 import Home from './components/Home';
 import ViewPosts from './components/viewPost';
+import axios from 'axios';
 
 const App = () => {
     axios.defaults.withCredentials = true;
     const [loggedInUser, setLoggedInUser] = useState(null);
-    const [page, setPage] = useState('home');
     const [loading, setLoading] = useState(true);
 
-    const navigate = (newPage) => setPage(newPage);
-
-    // Check session on load
     useEffect(() => {
         const checkSession = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/session/', {
-                    withCredentials: true,
-                });
-                console.log("Session Check Response:", response.data); // Debugging
+                const response = await axios.get('http://localhost:8000/api/session/', { withCredentials: true });
                 setLoggedInUser(response.data.username);
-                setPage('dashboard');
             } catch (error) {
-                console.error("Session Check Error:", error);
                 setLoggedInUser(null);
-                setPage('home');
             } finally {
                 setLoading(false);
             }
@@ -38,60 +30,23 @@ const App = () => {
     }, []);
 
     if (loading) {
-        return <div>Loading...</div>; // Show while waiting for session check
-    }
-
-    if (page === 'dashboard') {
-        return (
-            <Dashboard
-                loggedInUser={loggedInUser}
-                setLoggedInUser={setLoggedInUser}
-                setPage={setPage}
-            />
-        );
-    }
-
-    if (page === 'viewPost') {
-        return (
-            <ViewPosts setPage={setPage} />
-        );
-    }
-
-    if(page === 'Postform') {
-        return (
-            <PostForm loggedInUser={loggedInUser} setPage={setPage} />
-        )
-    }
-
-    if (page === 'updateUser') {
-        return (
-            <UpdateUser setPage={setPage} />
-        )
-    }
-
-    if (page === 'signin') {
-        return (
-            <SignIn
-                setLoggedInUser={setLoggedInUser}
-                setPage={setPage}
-            />
-        );
-    }
-
-    if (page === 'register') {
-        return <Register navigate={navigate} />;
-    }
-
-    if (page === 'home') {
-        return <Home setPage={setPage}/>
+        return <div>Loading...</div>;
     }
 
     return (
-        <div>
-            <h1>My Blog</h1>
-            <ViewPosts />
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/anonDashboard" element={<AnonDashboard />} />
+                <Route path="/signin" element={<SignIn setLoggedInUser={setLoggedInUser} />} />
+                <Route path="/dashboard" element={<Dashboard loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />} />
+                <Route path="/updateUser" element={<UpdateUser />} />
+                <Route path="/postForm" element={<PostForm loggedInUser={loggedInUser} />} />
+                <Route path="/viewPosts" element={<ViewPosts />} />
+            </Routes>
+        </Router>
     );
-}
+};
 
 export default App;
