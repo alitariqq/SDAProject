@@ -1,0 +1,111 @@
+.question-box {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.question-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.poster-pfp {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.poster-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.question-content h4 {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.question-content p {
+    font-size: 14px;
+    color: #666;
+}
+
+.question-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;  /* Ensure the vote count is aligned with buttons */
+}
+
+.bookmark-btn, .vote-btn {
+    padding: 8px 12px;
+    border: none;
+    background-color: #fff;
+    color: #888;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.bookmark-btn:hover, .vote-btn:hover {
+    background-color: #ff7300;
+    color: #fff;
+}
+
+.vote-count {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* QuestionBox.css */
+.delete-btn {
+    padding: 8px 12px;
+    border: none;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: darkred;
+}
+.lock-btn {
+    padding: 8px 12px;
+    border: none;
+    background-color: darkorange;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.lock-btn:hover {
+    background-color: orange;
+}
+
+/* Style for the "Locked" label */
+.locked-label {
+    background-color: #ff6347;
+    color: white;
+    padding: 5px 10px;
+    font-weight: bold;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 10px;
+}

@@ -1,0 +1,370 @@
+/* General Layout */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    overflow: hidden;
+}
+
+/* Top Bar */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: rgb(0, 187, 255);
+    font-size: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    height: 40px;
+    box-sizing: border-box; /* Include padding in height */
+}
+
+/* Fix Top Right Alignment */
+.top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Log Out Button */
+.logout-btn {
+    border: none;
+    background-color: white;
+    color: #ff7300;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.logout-btn:hover {
+    background-color: #ff8c33;
+    color: white;
+}
+
+
+/* Post Question Button */
+.post-question-btn {
+    border: none;
+    background-color: white;
+    color: #ff7300;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.post-question-btn:hover {
+    background-color: #ff8c33;
+    color: white;
+}
+
+/* Profile Picture */
+/* Profile Picture */
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: cover;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+/* Hover effect for profile picture */
+.profile-pic.hoverable:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid #ff7300;
+}
+
+/* Content Area */
+.content-area {
+    display: flex; /* Align left and main panels side by side */
+    margin-top: 50px; /* Ensure left panel is below top bar */
+    height: calc(100vh - 50px); /* Full height minus top bar */
+    width: 100%;
+    position: relative; /* Prevent overflow issues */
+}
+
+/* Left Panel */
+.left-panel {
+    width: 250px;
+    background-color: #ffffff;
+    border-right: 1px solid #ddd;
+    padding: 30px 20px 20px 20px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    height: calc(100vh - 50px);
+    position: relative;
+    margin-top: 40px;
+}
+
+/* Search Section */
+.search-section {
+    margin-left: -20px; /* Move it to the left */
+    margin-bottom: 20px; /* Add space below */
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: #ff7300;
+}
+
+/* Main Panel */
+.main-panel {
+    flex-grow: 1; /* Take up remaining space */
+    padding: 20px;
+    background-color: #ffffff;
+    overflow-y: auto;
+    height: calc(100vh - 50px); /* Full height minus top bar */
+    margin-left: 300px; /* Align with the left panel */
+    box-sizing: border-box; /* Include padding in height calculations */
+    padding-left: 20px; /* Add left-side padding */
+}
+
+/* Sort Buttons */
+.sort-buttons {
+    display: flex;
+    gap: 10px;
+    position: sticky;
+    top: 0; /* Ensure buttons stick when scrolling */
+    background-color: #ffffff;
+    z-index: 5; /* Ensure they appear above other elements */
+    padding: 10px 0;
+}
+
+.sort-buttons button.active {
+    background-color: #ff7300;
+    color: white;
+}
+
+.sort-buttons button {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.sort-buttons button:hover {
+    background-color: #ff8c33;
+}
+
+/* Post Cards */
+.posts-list {
+    margin-top: 20px;
+}
+
+.post-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    background-color: #ffffff;
+}
+
+.tags {
+    margin-top: 10px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: #f0f0f0;
+    margin-right: 5px;
+    border-radius: 4px;
+}
+
+.post-meta {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+}
+
+.post-meta span {
+    font-size: 14px;
+    color: #888;
+}
+
+/* Main Panel */
+.main-panel {
+    flex-grow: 1; /* Take up remaining space */
+    padding: 20px;
+    background-color: #ffffff;
+    overflow-y: auto; /* Enable scrolling for this panel */
+    height: calc(100vh - 50px); /* Full height minus top bar */
+    box-sizing: border-box; /* Include padding in height calculations */
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+}
+
+/* Sort Buttons */
+.sort-buttons {
+    display: flex;
+    gap: 10px;
+    background-color: #ffffff;
+    z-index: 5; /* Ensure they appear above other elements */
+    padding: 10px 0;
+    position: sticky; /* Keep buttons visible on scroll */
+    top: 0;
+    border-bottom: 1px solid #ddd; /* Separator for clarity */
+}
+
+/* Post List */
+.posts-list {
+    display: flex;
+    flex-direction: column; /* Align items in a vertical list */
+    gap: 15px; /* Space between question boxes */
+    margin-top: 10px;
+    overflow-y: auto; /* Ensure scrolling inside the list if needed */
+}
+
+/* Post Cards */
+.post-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-card h4 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.post-card p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.tags {
+    margin-top: 10px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: #f0f0f0;
+    margin-right: 5px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.post-meta {
+    margin-top: 10px;
+    display: flex;
+    gap: 15px;
+    font-size: 12px;
+    color: #888;
+}
+
+.post-meta span {
+    white-space: nowrap;
+}
+
+/* Must Reads Panel */
+.must-reads-panel {
+    width: 250px;
+    background-color: #ffffff;
+    border-left: 1px solid #ddd;
+    padding: 20px;
+    box-sizing: border-box;
+    height: calc(100vh - 50px); /* Full height minus top bar */
+    position: relative;
+    overflow-y: auto;
+}
+
+.must-reads-panel h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.must-reads-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.must-reads-list li {
+    margin-bottom: 10px;
+}
+
+.must-reads-list a {
+    color: #ff7300;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.must-reads-list a:hover {
+    text-decoration: underline;
+}
+
+
+.post-poll-btn {
+    border: none;
+    background-color: white;
+    color: #f98212; /* Orange text */
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease; /* Smooth color transition */
+}
+
+.post-poll-btn:hover {
+    background-color: #f98212; /* Orange background */
+    color: white; /* White text */
+}
+
+.delete-btn {
+    border: none;
+    background-color: #ff4d4d;
+    color: white;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.delete-btn:hover {
+    background-color: #ff1a1a;
+}
+

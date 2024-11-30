@@ -1,277 +1,236 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { getCSRFToken } from '../utils/csrf'; // Import CSRF token utility
+import MainForm from './MainForm'; // Import MainForm
+import MainPoll from './MainPoll'; // Import MainPoll
+import QuestionBox from './QuestionBox'; // Import QuestionBox
+import PollBox from './PollBox'; // Import PollBox
+import './Dashboard.css';
 
-const Dashboard = ({ loggedInUser, setLoggedInUser, setPage }) => {
-  const [user, setUser] = useState(null); // Use null to signify no data initially
-  const [postId, setPostId] = useState(2);
+const Dashboard = ({ setLoggedInUser }) => {
+    const [questions, setQuestions] = useState([]);
+    const [activeFilter, setActiveFilter] = useState('New');
+    const [links, setLinks] = useState({ mustRead: [], featured: [] });
+    const [showForm, setShowForm] = useState(false); // State to toggle question form visibility
+    const [showPoll, setShowPoll] = useState(false); // State to toggle poll form visibility
+    const navigate = useNavigate();
+    const [polls, setPolls] = useState([]);
 
-  const handleLogout = async () => {
-    try {
-      const response = await axios.post(
-        'http://localhost:8000/api/logout/',
-        {},
-        {
-          headers: {
-            'X-CSRFToken': getCSRFToken(), // Manually set CSRF token for logout
-          },
+
+    useEffect(() => {
+        const fetchQuestions = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/questions/');
+                setQuestions(response.data);
+            } catch (error) {
+                console.error('Error fetching questions:', error);
+            }
+        };
+
+        const fetchLinks = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/links/');
+                setLinks(response.data);
+            } catch (error) {
+                console.error('Error fetching links:', error);
+            }
+        };
+
+        fetchQuestions();
+        fetchLinks();
+    }, []);
+
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://localhost:8000/api/logout/', {}, { withCredentials: true });
+            setLoggedInUser(null); // Clear logged-in user state
+            navigate('/'); // Redirect to home page
+        } catch (error) {
+            console.error('Error logging out:', error);
         }
-      );
-      console.log('Logout successful', response.data);
-      setLoggedInUser(null); // Clear the logged-in user state
-      setPage('home');
-    } catch (error) {
-      console.error('Logout failed', error);
-    }
-  };
+    };
 
-  const getUserData = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/api/dashboard/',{
-        withCredentials: true,
-      });
-      console.log('User data fetched successfully', response.data);
-      setUser(response.data); // Extract the data property
-    } catch (error) {
-      console.error("Error: Couldn't fetch user data", error);
-    }
-  };
+    const handleProfileClick = () => {
+        navigate('/selfprofile?filter=Questions');
+    };
 
-  const upvotePost = async () => {
-    try {
-      const response = await axios.post('http://localhost:8000/api/upvote/post/',{postId}, {
-        withCredentials: true, headers: {
-          'X-CSRFToken': getCSRFToken(), // Manually set CSRF token for logout
-        },
-      });
-      console.log('Upvoted Successfully', response.data);
-    } catch (error) {
-      console.error("Couldnt upvote", error);
-    }
-  };
+    const handleFilterNavigation = (filter) => {
+        navigate(`/selfprofile?filter=${filter}`);
+    };
 
-  const upvoteStatus = async () => {
-    try {
-      const response = await axios.post('http://localhost:8000/api/upvote/post/status/', {postId}, {
-        withCredentials: true, headers: {
-          'X-CSRFToken': getCSRFToken(), // Manually set CSRF token for logout
-        },
-      });
-
-      if(response.status === 201) {
-        console.log('upvoted')
-      }
-      else if(response.status === 202) {
-        console.log('not upvoted')
-      }
-      
-    } catch (error) {
-      console.error("Error: BC nhi chal rha", error);
-    }
-  };
-
-  const upvoteDelete = async () => {
-    try {
-      const response = await axios.delete('http://localhost:8000/api/upvote/post/delete/', {
-        data: {postId },  // `data` is used to send the payload for DELETE
-        headers: {
-            'X-CSRFToken': getCSRFToken(), // Add CSRF token
-        },
-        withCredentials: true, // Include session cookie
+    const filteredQuestions = questions.filter((question) => {
+        if (activeFilter === 'New') return question.isNew;
+        if (activeFilter === 'Hot') return question.isHot;
+        if (activeFilter === 'Closed') return question.isClosed;
+        if (activeFilter === 'Top') return question.isTop;
+        return true;
     });
-    if (response.status === 200) {
-      console.log('Upvote deleted successfully!');
-      }
-    } catch (error) {
-      if (error.response) {
-        console.error('Error:', error.response.data.error);
-      } else {
-        console.error('Unexpected error:', error.message);
-      }
-    }
-  };
-
-  const downvotePost = async () => {
-    try {
-      const response = await axios.post('http://localhost:8000/api/downvote/post/',{postId}, {
-        withCredentials: true, headers: {
-          'X-CSRFToken': getCSRFToken(), // Manually set CSRF token for logout
-        },
-      });
-      console.log('Downvoted Successfully', response.data);
-    } catch (error) {
-      console.error("Couldnt downvote", error);
-    }
-  };
-
-  const downvoteStatus = async () => {
-    try {
-      const response = await axios.post('http://localhost:8000/api/downvote/post/status/', {postId}, {
-        withCredentials: true, headers: {
-          'X-CSRFToken': getCSRFToken(), // Manually set CSRF token for logout
-        },
-      });
-
-      if(response.status === 201) {
-        console.log('downvoted')
-      }
-      else if(response.status === 202) {
-        console.log('not downvoted')
-      }
-      
-    } catch (error) {
-      console.error("Error: BC nhi chal rha", error);
-    }
-  };
-
-  const downvoteDelete = async () => {
-    try {
-      const response = await axios.delete('http://localhost:8000/api/downvote/post/delete/', {
-        data: {postId },  // `data` is used to send the payload for DELETE
-        headers: {
-            'X-CSRFToken': getCSRFToken(), // Add CSRF token
-        },
-        withCredentials: true, // Include session cookie
+    const filteredPolls = polls.filter((poll) => {
+        if (activeFilter === 'New') return poll.isNew;
+        if (activeFilter === 'Hot') return poll.isHot;
+        if (activeFilter === 'Closed') return poll.isClosed;
+        if (activeFilter === 'Top') return poll.isTop;
+        return true;
     });
-    if (response.status === 200) {
-      console.log('Downvote deleted successfully!');
-      }
-    } catch (error) {
-      if (error.response) {
-        console.error('Error:', error.response.data.error);
-      } else {
-        console.error('Unexpected error:', error.message);
-      }
-    }
-  };
 
-  const bookmarkPost = async () => {
-    try {
-      const response = await axios.post('http://localhost:8000/api/bookmark/post/',{postId}, {
-        withCredentials: true, headers: {
-          'X-CSRFToken': getCSRFToken(), // Manually set CSRF token for logout
-        },
-      });
-      console.log('Bookmarked Successfully', response.data);
-    } catch (error) {
-      console.error("Couldnt Bookmark", error);
-    }
-  };
+    const toggleForms = (type) => {
+        if (type === 'question') {
+            setShowForm(!showForm);
+            setShowPoll(false); // Hide poll form if question form is shown
+        } else if (type === 'poll') {
+            setShowPoll(!showPoll);
+            setShowForm(false); // Hide question form if poll form is shown
+        }
+    };
 
-  const bookmarkStatus = async () => {
-    try {
-      const response = await axios.post('http://localhost:8000/api/bookmark/post/status/', {postId}, {
-        withCredentials: true, headers: {
-          'X-CSRFToken': getCSRFToken(), // Manually set CSRF token for logout
-        },
-      });
+    return (
+        <div className="dashboard-container">
+            {/* Top Bar */}
+            <div className="top-bar">
+                <h1>Social Forum</h1>
+                <div className="top-bar-right">
+                    <button
+                        className="post-question-btn"
+                        onClick={() => toggleForms('question')} // Toggle question form visibility
+                    >
+                        {showForm ? 'Close Question Form' : 'Post Question'}
+                    </button>
+                    <button
+                        className="post-poll-btn"
+                        onClick={() => toggleForms('poll')} // Toggle poll form visibility
+                    >
+                        {showPoll ? 'Close Poll Form' : 'Post Poll'}
+                    </button>
+                    <button className="logout-btn" onClick={handleLogout}>
+                        Log Out
+                    </button>
+                    <div className="profile-pic" onClick={handleProfileClick}>
+                        <img src="https://via.placeholder.com/40" alt="Profile" />
+                    </div>
+                </div>
+            </div>
 
-      if(response.status === 201) {
-        console.log('Bookmarked')
-      }
-      else if(response.status === 202) {
-        console.log('not Bookmarked')
-      }
-      
-    } catch (error) {
-      console.error("Error: BC nhi chal rha", error);
-    }
-  };
+            {/* Content Area */}
+            <div className="content-area">
+                {/* Left Panel */}
+                <div className="left-panel">
+                    <div className="search-section">
+                        <input type="text" placeholder="Search" className="search-input" />
+                    </div>
 
-  const bookmarkDelete = async () => {
-    try {
-      const response = await axios.delete('http://localhost:8000/api/bookmark/post/delete/', {
-        data: {postId },  // `data` is used to send the payload for DELETE
-        headers: {
-            'X-CSRFToken': getCSRFToken(), // Add CSRF token
-        },
-        withCredentials: true, // Include session cookie
-    });
-    if (response.status === 200) {
-      console.log('Downvote bookmark successfully!');
-      }
-    } catch (error) {
-      if (error.response) {
-        console.error('Error:', error.response.data.error);
-      } else {
-        console.error('Unexpected error:', error.message);
-      }
-    }
-  };
+                    <div className="menu">
+                        <h3>Menu</h3>
+                        <div className="menu-item">Questions</div>
+                        <div className="menu-item">Polls</div>
+                        <div className="menu-item">Ranking</div>
+                    </div>
 
-  const postDelete = async () => {
-    try {
-      const response = await axios.delete('http://localhost:8000/api/post/delete/', {
-        data: {postId },  // `data` is used to send the payload for DELETE
-        headers: {
-            'X-CSRFToken': getCSRFToken(), // Add CSRF token
-        },
-        withCredentials: true, // Include session cookie
-    });
-    if (response.status === 200) {
-      console.log('Post Deleted successfully!');
-      }
-    } catch (error) {
-      if (error.response) {
-        console.error('Error:', error.response.data.error);
-      } else {
-        console.error('Unexpected error:', error.message);
-      }
-    }
-  };
+                    <div className="personal-navigator">
+                        <h3>Personal Navigator</h3>
+                        <div
+                            className="nav-item"
+                            onClick={() => handleFilterNavigation('Questions')}
+                        >
+                            Your Questions
+                        </div>
+                        <div
+                            className="nav-item"
+                            onClick={() => handleFilterNavigation('Answers')}
+                        >
+                            Your Answers
+                        </div>
+                        <div
+                            className="nav-item"
+                            onClick={() => handleFilterNavigation('Likes & Votes')}
+                        >
+                            Your Votes & Likes
+                        </div>
+                    </div>
+                </div>
 
-  const postView = async () => {
-    setPage('viewPost')
-  };
-
-  useEffect(() => {
-    if (loggedInUser) {
-      getUserData();
-    }
-  }, [loggedInUser]); // Dependency array ensures this only runs when loggedInUser changes
-
-  const updateUserDetails = () => {
-    setPage('updateUser');
-  };
-
-  const addPostPage = () => {
-    setPage('Postform');
-  };
-
-  if (!loggedInUser) {
-    console.log('Dashboard - Waiting for loggedInUser...');
-    return <div>Loading user information...</div>;
-  }
-
-  return (
-    <div>
-      <h1>Welcome, {loggedInUser}!</h1>
-      {user ? (
+                {/* Main Panel */}
+<div className="main-panel">
+    {showForm && <MainForm />} {/* Render MainForm if showForm is true */}
+    {showPoll && <MainPoll />} {/* Render MainPoll if showPoll is true */}
+    {!showForm && !showPoll && ( // Only show questions list if no form is visible
         <>
-          <h2>Username: {user.username}</h2>
-          <h2>Email: {user.email}</h2>
-          <h2>Name: {user.first_name} {user.last_name}</h2>
-          <h2>Age: {user.age}</h2>
+            <div className="sort-buttons">
+                <button
+                    className={activeFilter === 'New' ? 'active' : ''}
+                    onClick={() => setActiveFilter('New')}
+                >
+                    New
+                </button>
+                <button
+                    className={activeFilter === 'Hot' ? 'active' : ''}
+                    onClick={() => setActiveFilter('Hot')}
+                >
+                    Hot
+                </button>
+                <button
+                    className={activeFilter === 'Top' ? 'active' : ''}
+                    onClick={() => setActiveFilter('Top')}
+                >
+                    Top
+                </button>
+                <button
+                    className={activeFilter === 'Closed' ? 'active' : ''}
+                    onClick={() => setActiveFilter('Closed')}
+                >
+                    Closed
+                </button>
+            </div>
+
+            <div className="posts-list">
+                {/* Render QuestionBox components */}
+                {filteredQuestions.map((question, index) => (
+                    <QuestionBox
+                        key={index}
+                        profilePic={question.poster.profilePic}
+                        name={question.poster.name}
+                        question={question.title}
+                        tags={question.tags}
+                        votes={question.votes}
+                        onUpvote={() => console.log(`Upvoted question ${question.id}`)}
+                        onDownvote={() => console.log(`Downvoted question ${question.id}`)}
+                        onBookmark={() => console.log(`Bookmarked question ${question.id}`)}
+                    />
+                ))}
+
+                {/* If you have polls, render PollBox components */}
+                {filteredPolls?.map((poll, index) => (
+                    <PollBox
+                        key={index}
+                        profilePic={poll.poster.profilePic}
+                        name={poll.poster.name}
+                        question={poll.title}
+                        options={poll.options}
+                        votes={poll.votes}
+                        onVote={(option) => console.log(`Voted for ${option} in poll ${poll.id}`)}
+                        onUpvote={() => console.log(`Upvoted poll ${poll.id}`)}
+                        onDownvote={() => console.log(`Downvoted poll ${poll.id}`)}
+                        onBookmark={() => console.log(`Bookmarked poll ${poll.id}`)}
+                    />
+                ))}
+            </div>
         </>
-      ) : (
-        <p>Loading user data...</p>
-      )}
-      <button onClick={handleLogout}>Logout</button>
-      <button onClick={postView}>viewPost</button>
-      <button onClick={updateUserDetails}>Update User</button>
-      <button onClick={addPostPage}>Post</button>
-      <button onClick={upvotePost}>upvoteTest</button>
-      <button onClick={upvoteStatus}>upvoteStatusTest</button>
-      <button onClick={upvoteDelete}>deleteUpvoteTest</button>
-      <button onClick={downvotePost}>downvoteTest</button>
-      <button onClick={downvoteStatus}>downvoteStatusTest</button>
-      <button onClick={downvoteDelete}>deletedownvoteTest</button>
-      <button onClick={bookmarkPost}>bookmarkTest</button>
-      <button onClick={bookmarkStatus}>bookmarkStatusTest</button>
-      <button onClick={bookmarkDelete}>deletebookmarkTest</button>
-      <button onClick={postDelete}>deletePostTest</button>
-    </div>
-  );
+    )}
+</div>
+
+                {/* Must Reads Panel */}
+                <div className="must-reads-panel">
+                    <h3>Must Reads</h3>
+                    <ul className="must-reads-list">
+                        {links.mustRead.map((link, index) => (
+                            <li key={index}>
+                                <a href={`/questions/${link.id}`}>{link.title}</a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default Dashboard;

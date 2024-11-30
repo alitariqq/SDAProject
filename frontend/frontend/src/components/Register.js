@@ -34,7 +34,7 @@ const Register = () => {
         <div className="register-page">
             {/* Top Bar */}
             <div className="top-bar">
-                <div className="logo">Student Forum</div>
+                <div className="logo">Social Forum</div>
                 <div className="auth-buttons">
                     <button onClick={() => navigate('/register')} className="top-bar-btn">
                         Register

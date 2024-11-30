@@ -1,0 +1,55 @@
+.main-form {
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .main-form h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .main-form select,
+  .main-form input,
+  .main-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .main-form textarea {
+    height: 150px;
+    resize: none;
+  }
+  
+  .main-form .buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .main-form .buttons .button {
+    background-color: #ff7e2d; /* Orange color */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 20px; /* Rounded corners */
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth hover effect */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow */
+  }
+  
+  .main-form .buttons .button:hover {
+    background-color: #ff6312; /* Darker orange on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow increases */
+  }
+  
+  .main-form .buttons .button:active {
+    transform: scale(0.98); /* Slight scale-down on click */
+  }
+  
