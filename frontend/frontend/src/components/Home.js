@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
+import heroImage from '../assets/images/hero-image.jpg';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -40,10 +41,10 @@ const Home = () => {
                     </button>
                 </div>
                 <div className="hero-image">
-                    <img
-                        src={require('C:/Users/mshah/appl/src/hero-image.jpg')}
-                        alt="Community"
-                    />
+                <img
+    src={heroImage}
+    alt="Community"
+/>
                 </div>
             </div>
         </div>

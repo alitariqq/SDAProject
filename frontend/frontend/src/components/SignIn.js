@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignIn.css';
+import lapImage from '../assets/images/lap.jpeg';
 
 const SignIn = ({ setLoggedInUser }) => {
     const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -39,8 +40,8 @@ const SignIn = ({ setLoggedInUser }) => {
             <div className="signin-container">
                 {/* Left Panel */}
                 <div className="signin-left">
-                    <div className="lap">
-                        <img src={require('C:/Users/mshah/appl/src/lap.jpeg')} alt="Community" />
+                <div className="lap">
+                        <img src={lapImage} alt="Community" />
                     </div>
                 </div>
 

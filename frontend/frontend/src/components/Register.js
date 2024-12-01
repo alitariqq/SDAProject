@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './register.css';
+import lapImage from '../assets/images/lap.jpeg';
+
 
 const Register = () => {
     const navigate = useNavigate();
@@ -49,8 +51,8 @@ const Register = () => {
             <div className="register-container">
                 {/* Left Panel */}
                 <div className="register-left">
-                    <div className="lap">
-                        <img src={require('C:/Users/mshah/appl/src/lap.jpeg')} alt="Community" />
+                <div className="lap">
+                        <img src={lapImage} alt="Community" />
                     </div>
                 </div>
 
